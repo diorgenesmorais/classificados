@@ -2,7 +2,7 @@
 
 ##### Criar o Banco de dados
 ```bash
-create database ordenando default character set utf8mb4 default collate utf8mb4_general_ci;
+create database classificado default character set utf8mb4 default collate utf8mb4_general_ci;
 ```
 
 ##### Criar 3 tabelas (usando Flyway)

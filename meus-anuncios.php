@@ -27,10 +27,19 @@
           foreach ($anuncios as $anuncio):
           ?>
             <tr>
-              <td><img src="assets/images/anuncios/<?php echo $anuncio['url']; ?>" alt="Foto anúncio"></td>
+              <td>
+                <?php if(!empty($anuncio['url'])): ?>
+                  <img src="assets/images/anuncios/<?php echo $anuncio['url']; ?>" alt="Foto anúncio">
+                <?php else: ?>
+                  <img src="assets/images/default.png" height="100" alt="Imagem alternativa">
+                <?php endif; ?>
+              </td>
               <td><?php echo $anuncio['titulo']; ?></td>
               <td>R$ <?php echo number_format($anuncio['valor'], 2); ?></td>
-              <td></td>
+              <td>
+                <a href="editar-anuncio.php?id=<?php echo $anuncio['id']; ?>" class="btn btn-primary">Editar</a>
+                <a href="excluir-anuncio.php?id=<?php echo $anuncio['id']; ?>" class="btn btn-danger">Excluir</a>
+              </td>
             </tr>
           <?php
           endforeach;

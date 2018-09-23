@@ -24,14 +24,14 @@ class Usuario {
   public function login($email, $senha){
     global $pdo;
 
-    $sql = $pdo->prepare("select id from usuarios where email = :email and senha = :senha");
+    $sql = $pdo->prepare("select id, nome from usuarios where email = :email and senha = :senha");
     $sql->bindValue(":email", $email);
     $sql->bindValue(":senha", md5($senha));
     $sql->execute();
 
     if($sql->rowCount() > 0){
       $dado = $sql->fetch();
-      $_SESSION['cLogin'] = $dado['id'];
+      $_SESSION['cLogin'] = array("id" => $dado['id'], "nome" => $dado['nome']);
       return true;
     }
     return false;

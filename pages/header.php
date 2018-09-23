@@ -16,6 +16,7 @@
         </div>
         <ul class="nav navbar-nav navbar-right">
           <?php if(isset($_SESSION['cLogin']) && !empty($_SESSION['cLogin'])): ?>
+            <li><a href="#"><?php echo $_SESSION['cLogin']['nome']; ?></a></li>
             <li><a href="meus-anuncios.php">Meus anúncios</a></li>
             <li><a href="logout.php">Sair</a></li>
           <?php else: ?>

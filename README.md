@@ -22,4 +22,10 @@ categorias |
 anuncios |
 anuncio_images |
 
+### Foram definidas as seguintes constantes no arquivo access.php
 
+Constantes  |
+------------------ |
+define("WIDTH_MAX", 500); |
+define("HEIGHT_MAX", 500); |
+define("FILE_LOCATION", "assets/images/anuncios/"); |

@@ -8,7 +8,14 @@
   $total_anuncios = $a->getTotalAnuncios();
   $total_users = $u->getTotalUsuarios();
 
-  $anuncios = $a->getUltimosAnuncios();
+  // primeira página.
+  $page = 1;
+  $perPage = 2;
+  if(assert($_GET['page']) && !empty($_GET['page'])){
+    $page = addslashes($_GET['page']);
+  }
+  $total_pages = ceil($total_anuncios / $perPage);
+  $anuncios = $a->getUltimosAnuncios($page, $perPage);
 ?>
     <div class="container-fluid">
       <div class="jumbotron">
@@ -42,6 +49,11 @@
               <?php endforeach; ?>
             </tbody>
           </table>
+          <ul class="pagination">
+            <?php for($i = 1; $i <= $total_pages; $i++): ?>
+              <li class="<?php echo ($page==$i)?'active':''; ?>"><a href="index.php?page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
+            <?php endfor; ?>
+          </ul>
         </div>
       </div>
     </div>

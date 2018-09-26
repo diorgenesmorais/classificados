@@ -129,13 +129,19 @@ class Anuncio {
   }
 
   /**
+   * Obter últimos anúncios
+   *
+   * @param integer $page obter a partir de qual página
+   * @param integer $perPage limita a quantidade de páginas.
    * @return array com os últimos anúncios.
    */
-  public function getUltimosAnuncios(){
+  public function getUltimosAnuncios($page, $perPage){
     global $pdo;
     $dados = array();
+    $offset = ($page - 1) * $perPage;
+
     $sql = $pdo->prepare("select *, (select anuncio_images.url from anuncio_images where anuncio_images.anuncio_id = anuncios.id limit 1) as url,
-    (select nome from categorias where categorias.id = anuncios.categoria_id) as categoria from anuncios order by id desc");
+    (select nome from categorias where categorias.id = anuncios.categoria_id) as categoria from anuncios order by id desc limit $offset, $perPage");
     if($sql->execute() && $sql->rowCount() > 0){
       $dados = $sql->fetchAll();
     }

@@ -29,9 +29,9 @@
             <tr>
               <td>
                 <?php if(!empty($anuncio['url'])): ?>
-                  <img src="assets/images/anuncios/<?php echo $anuncio['url']; ?>" alt="Foto anúncio">
+                  <img src="assets/images/anuncios/<?php echo $anuncio['url']; ?>" height="60" alt="Foto anúncio">
                 <?php else: ?>
-                  <img src="assets/images/default.png" height="100" alt="Imagem alternativa">
+                  <img src="assets/images/default.png" height="60" alt="Imagem alternativa">
                 <?php endif; ?>
               </td>
               <td><?php echo $anuncio['titulo']; ?></td>

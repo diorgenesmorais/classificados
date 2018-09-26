@@ -140,7 +140,7 @@ class Anuncio {
     $dados = array();
     $offset = ($page - 1) * $perPage;
 
-    $sql = $pdo->prepare("select *, (select anuncio_images.url from anuncio_images where anuncio_images.anuncio_id = anuncios.id limit 1) as url,
+    $sql = $pdo->prepare("select id, titulo, valor, (select anuncio_images.url from anuncio_images where anuncio_images.anuncio_id = anuncios.id limit 1) as url,
     (select nome from categorias where categorias.id = anuncios.categoria_id) as categoria from anuncios order by id desc limit $offset, $perPage");
     if($sql->execute() && $sql->rowCount() > 0){
       $dados = $sql->fetchAll();

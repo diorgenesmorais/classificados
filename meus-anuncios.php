@@ -29,7 +29,7 @@
             <tr>
               <td>
                 <?php if(!empty($anuncio['url'])): ?>
-                  <img src="assets/images/anuncios/<?php echo $anuncio['url']; ?>" height="60" alt="Foto anúncio">
+                  <img src="<?php echo FILE_LOCATION.$anuncio['url']; ?>" height="60" alt="Foto anúncio">
                 <?php else: ?>
                   <img src="assets/images/default.png" height="60" alt="Imagem alternativa">
                 <?php endif; ?>

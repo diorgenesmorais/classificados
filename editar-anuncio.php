@@ -93,7 +93,7 @@
           <div class="panel-body">
             <?php foreach($info['fotos'] as $foto): ?>
               <div class="foto-item">
-                <img src="assets/images/anuncios/<?php echo $foto['url']; ?>" class="img-thumbnail" border="0"><br>
+                <img src="<?php echo FILE_LOCATION.$foto['url']; ?>" class="img-thumbnail" border="0"><br>
                 <a href="excluir-foto.php?id=<?php echo $foto['id']; ?>" class="btn btn-default">Excluir imagem</a>
               </div>
             <?php endforeach; ?>

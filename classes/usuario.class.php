@@ -36,5 +36,15 @@ class Usuario {
     }
     return false;
   }
+
+  /**
+   * @return integer total de usuários.
+   */
+  public function getTotalUsuarios(){
+    global $pdo;
+    $sql = $pdo->query("select count(*) as total from usuarios");
+    $row = $sql->fetch();
+    return $row['total'];
+  }
 }
 ?>

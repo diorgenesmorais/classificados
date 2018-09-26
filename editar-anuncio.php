@@ -9,6 +9,7 @@
     <?php
     exit;
   }
+  $get_id = $_GET['id'];
 
   $a = new Anuncio();
   if(isset($_POST['titulo']) && !empty($_POST['titulo'])){
@@ -17,8 +18,13 @@
     $valor = addslashes($_POST['valor']);
     $descricao = addslashes($_POST['descricao']);
     $estado = addslashes($_POST['estado']);
+    if(isset($_FILES['fotos'])){
+      $fotos = $_FILES['fotos'];
+    } else {
+      $fotos = array();
+    }
 
-    $a->editarAnuncio($titulo, $cat, $valor, $descricao, $estado, $_GET['id']);
+    $a->editarAnuncio($titulo, $cat, $valor, $descricao, $estado, $fotos, $get_id);
     ?>
       <div class="alert alert-success">
         Anúncio editado com sucesso!
@@ -26,8 +32,8 @@
     <?php
   }
 
-  if(isset($_GET['id']) && !empty($_GET['id'])){
-    $info = $a->getAnuncio($_GET['id']);
+  if(isset($get_id) && !empty($get_id)){
+    $info = $a->getAnuncio($get_id);
   } else {
     ?>
     <script type="text/javascript">
@@ -75,6 +81,24 @@
           <option value="1" <?php echo ($info[estado]==1)?'selected':''; ?>>Bom</option>
           <option value="2" <?php echo ($info[estado]==2)?'selected':''; ?>>Ótimo</option>
         </select>
+      </div>
+      <div class="form-group">
+        <label for="addFotos">Fotos do anúncio</label>
+        <input type="file" name="fotos[]" multiple id="addFotos"><br>
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            Fotos do anúncio
+          </div>
+          <div class="panel-body">
+            <?php foreach($info['fotos'] as $foto): ?>
+              <div class="foto-item">
+                <img src="assets/images/anuncios/<?php echo $foto['url']; ?>" class="img-thumbnail" border="0"><br>
+                <a href="excluir-foto.php?id=<?php echo $foto['id']; ?>" class="btn btn-default">Excluir imagem</a>
+              </div>
+            <?php endforeach; ?>
+          </div>
+        </div>
       </div>
       <button class="btn btn-default" type="submit" name="button">Salvar</button>
     </form>

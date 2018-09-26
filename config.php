@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+// see README about constants
 require_once 'vendor/access.php';
 
 global $pdo;

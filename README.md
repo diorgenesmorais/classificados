@@ -26,6 +26,5 @@ anuncio_images |
 
 Constantes  |
 ------------------ |
-define("WIDTH_MAX", 500); |
-define("HEIGHT_MAX", 500); |
+define("MAX_SIZE", 500); |
 define("FILE_LOCATION", "assets/images/anuncios/"); |

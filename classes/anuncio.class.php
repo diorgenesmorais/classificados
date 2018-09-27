@@ -163,17 +163,18 @@ class Anuncio {
           $imageInFile = FILE_LOCATION.$filename;
           move_uploaded_file($fotos['tmp_name'][$i], $imageInFile);
 
+          // obter a largura e altura da imagem na pasta
           list($width_orig, $height_orig) = getimagesize($imageInFile);
-          $ratio = $width_orig/$height_orig;
 
-          $width = WIDTH_MAX;
-          $height = HEIGHT_MAX;
-
-          // TODO: melhorar, limitando tanto a largura quanto a altura (fazer nas duas medidas)
-          if($width/$height > $ratio){
-            $width = $height*$ratio;
+          // alterar as medidas proporcionalmente limitando ao MAX_SIZE
+          $width = MAX_SIZE;
+          $height = MAX_SIZE;
+          if($width_orig > $height_orig){
+            $ratio = $width_orig / MAX_SIZE;
+            $height = $height_orig / $ratio;
           } else {
-            $height = $width*$ratio;
+            $ratio = $height_orig / MAX_SIZE;
+            $width = $width_orig /$ratio;
           }
 
           $img = imagecreatetruecolor($width, $height);

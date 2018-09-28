@@ -8,3 +8,10 @@
 .foto-item img {
   width: 150px;
 }
+/* Carousel */
+a.carousel-control {
+  width: 10%;
+}
+img.iphoto {
+  margin: 0 auto;
+}

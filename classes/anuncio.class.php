@@ -59,7 +59,7 @@ class Anuncio {
   public function getAnuncio($id){
     global $pdo;
     $dados = array();
-    $sql = $pdo->prepare("select * from anuncios where id = :id");
+    $sql = $pdo->prepare("select * from anuncios_all where id = :id");
     $sql->bindValue(":id", $id);
 
     if($sql->execute() && $sql->rowCount() > 0){

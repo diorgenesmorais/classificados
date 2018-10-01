@@ -119,10 +119,11 @@ class Anuncio {
     return $anuncio_id;
   }
 
-  public function getTotalAnuncios(){
+  public function getTotalAnuncios($filtros){
     global $pdo;
+    $conditions = $this->createConditions($filtros);
 
-    $sql = $pdo->query("select count(*) as total from anuncios");
+    $sql = $pdo->query("select count(*) as total from anuncios where ".implode(' and ', $conditions));
     $row = $sql->fetch();
 
     return $row['total'];
@@ -133,15 +134,17 @@ class Anuncio {
    *
    * @param integer $page obter a partir de qual página
    * @param integer $perPage limita a quantidade de páginas.
+   * @param array $filtros
    * @return array com os últimos anúncios.
    */
-  public function getUltimosAnuncios($page, $perPage){
+  public function getUltimosAnuncios($page, $perPage, $filtros){
     global $pdo;
     $dados = array();
     $offset = ($page - 1) * $perPage;
+    $conditions = $this->createConditions($filtros);
 
-    $sql = $pdo->prepare("select id, titulo, valor, (select anuncio_images.url from anuncio_images where anuncio_images.anuncio_id = anuncios.id limit 1) as url,
-    (select nome from categorias where categorias.id = anuncios.categoria_id) as categoria from anuncios order by id desc limit $offset, $perPage");
+    $sql = $pdo->prepare("select id, titulo, valor, estado, (select anuncio_images.url from anuncio_images where anuncio_images.anuncio_id = anuncios.id limit 1) as url,
+    (select nome from categorias where categorias.id = anuncios.categoria_id) as categoria from anuncios where ".implode(' and ', $conditions)." order by id desc limit $offset, $perPage");
     if($sql->execute() && $sql->rowCount() > 0){
       $dados = $sql->fetchAll();
     }
@@ -236,6 +239,26 @@ class Anuncio {
     $sql->bindValue(":id", $id);
     $sql->bindValue(":url", $filename);
     return $sql->execute();
+  }
+
+  /**
+   * @param array $filtros (categoria, preço, estado)
+   *
+   * @return array com as condições do WHERE
+   */
+  private function createConditions($filtros){
+    $conditions = array('1=1');
+    if(is_numeric($filtros['categoria'])){
+      array_push($conditions, "categoria_id = ".$filtros['categoria']);
+    }
+    if(!empty($filtros['preco'])){
+      $preco = explode('-', $filtros['preco']);
+      array_push($conditions, "valor between ".$preco[0]." and ".$preco[1]);
+    }
+    if(is_numeric($filtros['estado']) && in_array($filtros['estado'], array(0,1,2))){
+       array_push($conditions, "estado =".$filtros['estado']);
+    }
+    return $conditions;
   }
 }
 ?>

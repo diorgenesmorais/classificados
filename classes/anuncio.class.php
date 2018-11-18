@@ -172,12 +172,20 @@ class Anuncio {
           // alterar as medidas proporcionalmente limitando ao MAX_SIZE
           $width = MAX_SIZE;
           $height = MAX_SIZE;
+          /*
           if($width_orig > $height_orig){
             $ratio = $width_orig / MAX_SIZE;
             $height = $height_orig / $ratio;
           } else {
             $ratio = $height_orig / MAX_SIZE;
             $width = $width_orig /$ratio;
+          }
+          */
+          $ratio = $width_orig / $height_orig;
+          if($width/$height > $ratio){
+            $width = $height * $ratio;
+          } else {
+            $height = $width / $ratio;
           }
 
           $img = imagecreatetruecolor($width, $height);
